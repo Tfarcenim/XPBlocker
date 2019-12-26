@@ -2,7 +2,9 @@ package com.mrtrollnugnug.xpBlocker;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.commons.lang3.tuple.Pair;
@@ -13,6 +15,7 @@ public class XPBlocker {
 
   public XPBlocker() {
     FMLJavaModLoadingContext.get().getModEventBus().addListener(this::preInit);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_SPEC);
   }
 
   private void preInit(FMLCommonSetupEvent event) {
@@ -20,11 +23,11 @@ public class XPBlocker {
   }
 
   public static final ServerConfig SERVER;
-  public static final ForgeConfigSpec COMMON_SPEC;
+  public static final ForgeConfigSpec SERVER_SPEC;
 
   static {
     final Pair<ServerConfig, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
-    COMMON_SPEC = specPair.getRight();
+    SERVER_SPEC = specPair.getRight();
     SERVER = specPair.getLeft();
   }
 
